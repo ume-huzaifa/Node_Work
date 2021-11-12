@@ -14,133 +14,24 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use(express.json()) 
 
-//for actors dp
-const storage1 = multer.diskStorage({
+
+//for professionals
+
+const storage9 = multer.diskStorage({
     destination: function(req, file, cb) {
-        cb(null, 'uploads/actors/');
+        cb(null,'uploads/professionals/');
     },
     filename: function(req, file, cb) {
         cb(null, file.originalname); 
     }
 });
 
-const upload1 = multer({
-    storage : storage1
-});
-
-//for musicians dp
-
-const storage2 = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, 'uploads/musicians/');
-    },
-    filename: function(req, file, cb) {
-        cb(null, file.originalname); 
-    }
-});
-
-const upload2 = multer({
-    storage : storage2
+const upload9 = multer({
+    storage : storage9
 });
 
 
-//For tiktokers
-
-const storage3 = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, 'uploads/tiktokers/');
-    },
-    filename: function(req, file, cb) {
-        cb(null, file.originalname); 
-    }
-});
-
-const upload3 = multer({
-    storage : storage3
-});
-
-//for athletes
-
-const storage4 = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, 'uploads/athletes/');
-    },
-    filename: function(req, file, cb) {
-        cb(null, file.originalname); 
-    }
-});
-
-const upload4 = multer({
-    storage : storage4
-});
-
-
-//for comedians
-
-const storage5 = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, 'uploads/comedians/');
-    },
-    filename: function(req, file, cb) {
-        cb(null, file.originalname); 
-    }
-});
-
-const upload5 = multer({
-    storage : storage5
-});
-
-
-//for tv_hosts
-
-const storage6 = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, 'uploads/tv_hosts/');
-    },
-    filename: function(req, file, cb) {
-        cb(null, file.originalname); 
-    }
-});
-
-const upload6 = multer({
-    storage : storage6
-});
-
-
-//for politicians
-
-const storage7 = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, 'uploads/politicians/');
-    },
-    filename: function(req, file, cb) {
-        cb(null, file.originalname); 
-    }
-});
-
-const upload7 = multer({
-    storage : storage7
-});
-
-
-//for influencers
-
-const storage8 = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, 'uploads/influencers/');
-    },
-    filename: function(req, file, cb) {
-        cb(null, file.originalname); 
-    }
-});
-
-const upload8 = multer({
-    storage : storage8
-});
-
-
-
-
+//Signup
 app.post("/signup", async(req, res) => {
     
     try {
@@ -149,7 +40,7 @@ app.post("/signup", async(req, res) => {
         const {f_name} = req.body;
         const {l_name} = req.body;
         const {password} = req.body;
-        const {confrim_pass} = req.body;
+        const {confirm_pass} = req.body;
         const {email} = req.body;
         const {dob} = req.body;
         const {gender} = req.body;
@@ -163,7 +54,7 @@ app.post("/signup", async(req, res) => {
             });
         }
 
-        if(password != confrim_pass){
+        if(password != confirm_pass){
             return res.json({
                 "msg": "Your password do not match", 
                 "status" : 301
@@ -249,7 +140,7 @@ app.post("/signup", async(req, res) => {
 
 
 
-//Register.
+//Register
 
 app.post("/register", async(req, res) => {
     
@@ -393,44 +284,6 @@ app.post("/login", async(req, res) => {
     }
 });
 
-// database connection here //
-// async function dbStart() {
-//     try { 
-//         await pool.connect();
-//         console.log("DB connected successfully.");
-//         // await pool.query("");
-
-//     }
-//     catch (e) {
-//         console.error(`The error has occured: ${e}`)
-//     }
-// }
-
-// Listen on enviroment port or 5000
-// app.listen(port, () => console.log(`Listen on port ${port}`))
-//
-
-
-
-//Forget password
-
-// app.post("/forgetpassword", async(req, res) => {
-//     try {
-
-//         const {password} = req.body;
-//         const {confrim_pass} = req.body;
-
-//         if(password != confirm_pass){
-//             return res.json({
-//                 "msg": "Your password do not match", 
-//                 "status" : 301
-//             });
-//         }
-
-//         const saltRounds = 10;
-//         const salt = bcrypt.genSaltSync(saltRounds);
-
-//         const pass_hash = bcrypt.hashSync(password, salt);
 
 
 
@@ -462,13 +315,6 @@ app.post("/sendlinkviaemail", async(req, res) => {
                 console.log(db_email);
                 db_id = user.id
             
-                // generate new OTP
-                // function randomNum(min, max) {
-                //     return Math.floor(Math.random() * (max - min) + min)
-                // }
-
-               // const verificationCode = randomNum(10000, 99999);
-                // verificationCode = user.otp;
                 var link = `http://www.ezmec.com/resetpass/${db_id}`;
                 
                 // send Verification Code via email. 
@@ -477,19 +323,6 @@ app.post("/sendlinkviaemail", async(req, res) => {
                             "msg": "link for reset password is sent to the email.", 
                             "status" : 200
                         });
-
-                        
-
-                // client.query("INSERT users SET otp=$1 WHERE email=$2", [link, db_email], (err, results) => {
-                //     if (err) {
-                //         throw err;
-                //     }
-                //res.json({
-                    //         "msg": "link for reset password is sent to the email.", 
-                    //         "status" : 200
-                    //     });
-    
-                // });
             }
             
 
@@ -573,147 +406,10 @@ app.post("/resetpass/:uid", async(req, res) => {
 });
 
 
-//Actors API
 
 
-
-app.post("/add_actors", upload1.single("dp1"), async(req, res) => {
-    
-    try {
-        console.log(req.file);
-        //const {name} = req.body;
-        const {email} = req.body;
-        //const {p_pic} = req.body;
-        const {genre} = req.body;
-        const {price} = req.body;
-        const {role} = req.body;
-        // const {reviews} = req.body;
-        const {bio} = req.body;
-        // const {rating} = req.body;
-        const {fans} = req.body;
-
-        console.log(email);
-        
-        if (!email || !genre || !role || !bio){
-            return res.json({
-                "msg": "Please fill all the fields", 
-                "status" : 301
-            });
-        }      //
-               
-                // // check duplicacy of email 
-                pool.query(`SELECT * FROM actors
-                    WHERE email = ?`,
-                    [email], (err, result2) => {
-                    if (err) {
-                        console.log(err);
-                    }
-                    if (result2.length > 0) { 
-
-                        res.json({
-                            "msg": "Email is already registered",
-                            "status" : 303
-                        });
-                    }
-                    else {
-                      
-                        // const query = await pool.query("INSERT INTO actors (uname, f_name, l_name, password, ph_no, email, dob, gender) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *", [uumame, pass_hash, ph_no, email, dob, gender]);
-                        pool.query("INSERT INTO actors ( email, genre, price, role, bio, fans, p_pic) VALUES ( ?, ?, ?, ?, ?, ?, ?)", [email,  genre, price, role, bio, fans, req.file.path],
-                        (err, results) => {
-                            if (err) {
-                                throw err;
-                            }
-                            else {
-                                
-                                res.json({
-                                    "msg": "Data uploaded succesfull",
-                                    "status" : 200
-                                });  // rows[0] mean we dont need all the data in response we just need to read the data that we are inserting in to db just. so we specify row[0]
-                                
-                            } 
-                        });
-                    
-                }
-            });
-
-    } catch (error) {
-        console.error(error.message);        
-    }
-});
-
-
-
-
-//Musicians API
-
-
-
-app.post("/add_musicians", upload2.single("dp2"), async(req, res) => {
-    
-    try {
-        console.log(req.file);
-        //const {name} = req.body;
-        const {email} = req.body;
-        //const {p_pic} = req.body;
-        const {genre} = req.body;
-        const {price} = req.body;
-        const {role} = req.body;
-        // const {reviews} = req.body;
-        const {bio} = req.body;
-        // const {rating} = req.body;
-        const {fans} = req.body;
-        
-        if (!email || !genre || !role || !bio){
-            return res.json({
-                "msg": "Please fill all the fields", 
-                "status" : 301
-            });
-        }
-               
-                //  check duplicacy of email 
-                pool.query(`SELECT * FROM musicians
-                    WHERE email = ?`,
-                    [email], (err, result2) => {
-                    if (err) {
-                        console.log(err);
-                    }
-                    if (result2.length > 0) { 
-
-                        res.json({
-                            "msg": "Email is already registered",
-                            "status" : 303
-                        });
-                    }
-                    else {
-                      
-                        // const query = await pool.query("INSERT INTO musicians (uname, f_name, l_name, password, ph_no, email, dob, gender) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *", [uumame, pass_hash, ph_no, email, dob, gender]);
-                        pool.query("INSERT INTO musicians (email, genre, price, role, bio, fans, p_pic) VALUES (?, ?, ?, ?, ?, ?, ?)", [email,  genre, price, role, bio, fans, req.file.path],
-                        (err, results) => {
-                            if (err) {
-                                throw err;
-                            }
-                            else {
-                                
-                                res.json({
-                                    "msg": "Data uploaded succesfull",
-                                    "status" : 200
-                                });  // rows[0] mean we dont need all the data in response we just need to read the data that we are inserting in to db just. so we specify row[0]
-                                
-                            } 
-                        });
-                    
-                }
-            });
-
-    } catch (error) {
-        console.error(error.message);        
-    }
-});
-
-
-//Tiktok    
-
-app.post("/add_tiktokers", upload3.single("dp3"), async(req, res) => {
+//professionals    
+app.post("/add_professionals", upload9.single("dp9"), async(req, res) => {
     
     try {
         console.log(req.file);
@@ -728,7 +424,7 @@ app.post("/add_tiktokers", upload3.single("dp3"), async(req, res) => {
         // const {rating} = req.body;
         const {fans} = req.body;
         
-        if (!email || !genre || !role || !bio){
+        if (!email || !genre || !price || !role || !bio){
             return res.json({
                 "msg": "Please fill all the fields", 
                 "status" : 301
@@ -736,11 +432,11 @@ app.post("/add_tiktokers", upload3.single("dp3"), async(req, res) => {
         }
                
                 //  check duplicacy of email 
-                pool.query(`SELECT * FROM tiktokers
+                pool.query(`SELECT * FROM professionals
                     WHERE email = ?`,
                     [email], (err, result2) => {
                     if (err) {
-                        console.log(err);
+                        console.log(err); 
                     }
                     if (result2.length > 0) { 
 
@@ -752,7 +448,7 @@ app.post("/add_tiktokers", upload3.single("dp3"), async(req, res) => {
                     else {
                       
                         // const query = await pool.query("INSERT INTO musicians (uname, f_name, l_name, password, ph_no, email, dob, gender) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *", [uumame, pass_hash, ph_no, email, dob, gender]);
-                        pool.query("INSERT INTO tiktokers (email, genre, price, role, bio, fans, p_pic) VALUES (?, ?, ?, ?, ?, ?, ?)", [email,  genre, price, role, bio, fans, req.file.path],
+                        pool.query("INSERT INTO professionals (email, genre, price, role, bio, fans, p_pic) VALUES (?, ?, ?, ?, ?, ?, ?)", [email,  genre, price, role, bio, fans, req.file.path],
                         (err, results) => {
                             if (err) {
                                 throw err;
@@ -775,338 +471,86 @@ app.post("/add_tiktokers", upload3.single("dp3"), async(req, res) => {
     }
 });
 
+// Reviews posting
 
-
-/// API Athletes
-
-app.post("/add_athletes", upload4.single("dp4"), async(req, res) => {
+//professionals    
+app.post("/add_reviews", async(req, res) => {
     
     try {
         console.log(req.file);
-        //const {name} = req.body;
-        const {email} = req.body;
-        //const {p_pic} = req.body;
-        const {genre} = req.body;
-        const {price} = req.body;
-        const {role} = req.body;
-        // const {reviews} = req.body;
-        const {bio} = req.body;
-        // const {rating} = req.body;
-        const {fans} = req.body;
+        const pro_id = req.body;
+        const rev_name = req.body;
+        const long_ago = req.body;
+        const time  = req.body;
+        const rating = req.body;
+        const comment = req.body;
         
-        if (!email || !genre || !role || !bio){
+        if (!pro_id || !rev_name || !comment){
             return res.json({
                 "msg": "Please fill all the fields", 
                 "status" : 301
             });
         }
-               
-                //  check duplicacy of email 
-                pool.query(`SELECT * FROM athletes
-                    WHERE email = ?`,
-                    [email], (err, result2) => {
-                    if (err) {
-                        console.log(err);
-                    }
-                    if (result2.length > 0) { 
-
-                        res.json({
-                            "msg": "Email is already registered",
-                            "status" : 303
-                        });
-                    }
-                    else {
-                      
-                        // const query = await pool.query("INSERT INTO musicians (uname, f_name, l_name, password, ph_no, email, dob, gender) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *", [uumame, pass_hash, ph_no, email, dob, gender]);
-                        pool.query("INSERT INTO athletes (email, genre, price, role, bio, fans, p_pic) VALUES (?, ?, ?, ?, ?, ?, ?)", [email,  genre, price, role, bio, fans, req.file.path],
-                        (err, results) => {
-                            if (err) {
-                                throw err;
-                            }
-                            else {
-                                
-                                res.json({
-                                    "msg": "Data uploaded succesfull",
-                                    "status" : 200
-                                });  // rows[0] mean we dont need all the data in response we just need to read the data that we are inserting in to db just. so we specify row[0]
-                                
-                            } 
-                        });
-                    
-                }
-            });
-
+                          
+        // const query = await pool.query("INSERT INTO musicians (uname, f_name, l_name, password, ph_no, email, dob, gender) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *", [uumame, pass_hash, ph_no, email, dob, gender]);
+        pool.query("INSERT INTO review (pro_id, rev_name, long_ago, time, rating, comment) VALUES (?, ?, ?, ?, ?, ?)", [pro_id, rev_name, long_ago, time, rating, comment],
+        (err, results) => {
+            if (err) {
+                throw err;
+            }
+            else {
+                
+                res.json({
+                    "msg": "review uploaded succesfull",
+                    "status" : 200
+                });  // rows[0] mean we dont need all the data in response we just need to read the data that we are inserting in to db just. so we specify row[0]
+                
+            } 
+        });
+            
     } catch (error) {
         console.error(error.message);        
     }
 });
 
-// 
-/// API Comedians
 
-app.post("/add_comedians", upload5.single("dp5"), async(req, res) => {
-    
+
+// get all the partners data from professionals
+app.get("/getprofessionals", async(req, res) => {
     try {
-        console.log(req.file);
-        //const {name} = req.body;
-        const {email} = req.body;
-        //const {p_pic} = req.body;
-        const {genre} = req.body;
-        const {price} = req.body;
-        const {role} = req.body;
-        // const {reviews} = req.body;
-        const {bio} = req.body;
-        // const {rating} = req.body;
-        const {fans} = req.body;
+        pool.query("SELECT * FROM professionals", (err, results)=> {
+            if (err) throw err;
+
+            res.json(results);          
+        });
         
-        if (!email || !genre || !role || !bio){
-            return res.json({
-                "msg": "Please fill all the fields", 
-                "status" : 301
-            });
-        }
-               
-                //  check duplicacy of email 
-                pool.query(`SELECT * FROM comedians
-                    WHERE email = ?`,
-                    [email], (err, result2) => {
-                    if (err) {
-                        console.log(err);
-                    }
-                    if (result2.length > 0) { 
-
-                        res.json({
-                            "msg": "Email is already registered",
-                            "status" : 303
-                        });
-                    }
-                    else {
-                      
-                        // const query = await pool.query("INSERT INTO comedians (uname, f_name, l_name, password, ph_no, email, dob, gender) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *", [uumame, pass_hash, ph_no, email, dob, gender]);
-                        pool.query("INSERT INTO comedians (email, genre, price, role, bio, fans, p_pic) VALUES (?, ?, ?, ?, ?, ?, ?)", [email,  genre, price, role, bio, fans, req.file.path],
-                        (err, results) => {
-                            if (err) {
-                                throw err;
-                            }
-                            else {
-                                
-                                res.json({
-                                    "msg": "Data uploaded succesfull",
-                                    "status" : 200
-                                });  // rows[0] mean we dont need all the data in response we just need to read the data that we are inserting in to db just. so we specify row[0]
-                                
-                            } 
-                        });
-                    
-                }
-            });
-
     } catch (error) {
-        console.error(error.message);        
+        console.error(error.message);
     }
-});
+})
 
-
-
-/// API tv_hosts
-
-app.post("/add_tv_hosts", upload6.single("dp6"), async(req, res) => {
-    
+// get the partners data by giving pro_id
+app.get("/getprofessionals/:pro_id", async(req, res) => {
     try {
-        console.log(req.file);
-        //const {name} = req.body;
-        const {email} = req.body;
-        //const {p_pic} = req.body;
-        const {genre} = req.body;
-        const {price} = req.body;
-        const {role} = req.body;
-        // const {reviews} = req.body;
-        const {bio} = req.body;
-        // const {rating} = req.body;
-        const {fans} = req.body;
-        
-        if (!email || !genre || !role || !bio){
-            return res.json({
-                "msg": "Please fill all the fields", 
-                "status" : 301
-            });
-        }   
-               
-                //  check duplicacy of email 
-                pool.query(`SELECT * FROM tv_hosts
-                    WHERE email = ?`,
-                    [email], (err, result2) => {
-                    if (err) {
-                        console.log(err);
-                    }
-                    if (result2.length > 0) { 
+        const pro_id = req.params.pro_id
+        console.log(pro_id);
+        pool.query("SELECT * FROM `professionals` WHERE `pro_id`=?",[pro_id],  (err, results)=> {
+            if (err) throw err;
 
-                        res.json({
-                            "msg": "Email is already registered",
-                            "status" : 303
-                        });
-                    }
-                    else {
-                      
-                        // const query = await pool.query("INSERT INTO comedians (uname, f_name, l_name, password, ph_no, email, dob, gender) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *", [uumame, pass_hash, ph_no, email, dob, gender]);
-                        pool.query("INSERT INTO tv_hosts (email, genre, price, role, bio, fans, p_pic) VALUES (?, ?, ?, ?, ?, ?, ?)", [email,  genre, price, role, bio, fans, req.file.path],
-                        (err, results) => {
-                            if (err) {
-                                throw err;
-                            }
-                            else {
-                                
-                                res.json({
-                                    "msg": "Data uploaded succesfull",
-                                    "status" : 200
-                                });  // rows[0] mean we dont need all the data in response we just need to read the data that we are inserting in to db just. so we specify row[0]
-                                
-                            } 
-                        });
-                    
-                }
-            });
+            res.json(results);          
+        });
 
     } catch (error) {
-        console.error(error.message);        
+        console.error(error.message);
     }
-});
-
-               
-
-/// API Politicians
-
-app.post("/add_politicians", upload7.single("dp7"), async(req, res) => {
-    
-    try {
-        console.log(req.file);
-        //const {name} = req.body;
-        const {email} = req.body;
-        //const {p_pic} = req.body;
-        const {genre} = req.body;
-        const {price} = req.body;
-        const {role} = req.body;
-        // const {reviews} = req.body;
-        const {bio} = req.body;
-        // const {rating} = req.body;
-        const {fans} = req.body;
-        
-        if (!email || !genre || !role || !bio){
-            return res.json({
-                "msg": "Please fill all the fields", 
-                "status" : 301
-            });
-        }
-               
-                //  check duplicacy of email 
-                pool.query(`SELECT * FROM politicians
-                    WHERE email = ?`,
-                    [email], (err, result2) => {
-                    if (err) {
-                        console.log(err);
-                    }
-                    if (result2.length > 0) { 
-
-                        res.json({
-                            "msg": "Email is already registered",
-                            "status" : 303
-                        });
-                    }
-                    else {
-                      
-                        // const query = await pool.query("INSERT INTO comedians (uname, f_name, l_name, password, ph_no, email, dob, gender) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *", [uumame, pass_hash, ph_no, email, dob, gender]);
-                        pool.query("INSERT INTO politicians (email, genre, price, role, bio, fans, p_pic) VALUES ( ?, ?, ?, ?, ?, ?, ?)", [email,  genre, price, role, bio, fans, req.file.path],
-                        (err, results) => {
-                            if (err) {
-                                throw err;
-                            }
-                            else {
-                                
-                                res.json({
-                                    "msg": "Data uploaded succesfull",
-                                    "status" : 200
-                                });  // rows[0] mean we dont need all the data in response we just need to read the data that we are inserting in to db just. so we specify row[0]
-                                
-                            } 
-                        });
-                    
-                }
-            });
-
-    } catch (error) {
-        console.error(error.message);        
-    }
-});
-
-
-
-/// API influencers
-
-app.post("/add_influencers", upload8.single("dp8"), async(req, res) => {
-    
-    try {
-        console.log(req.file);
-        // const {name} = req.body;
-        const {email} = req.body;
-        // const {p_pic} = req.body;
-        const {genre} = req.body;
-        const {price} = req.body;
-        const {role} = req.body;
-        // const {reviews} = req.body;
-        const {bio} = req.body;
-        // const {rating} = req.body;
-        const {fans} = req.body;
-        
-        if (!email || !genre || !price|| !role || !bio){
-            return res.json({
-                "msg": "Please fill all the fields", 
-                "status" : 301
-            });
-        }   
-               
-                //  check duplicacy of email 
-                pool.query(`SELECT * FROM influencers
-                    WHERE email = ?`,
-                    [email], (err, result2) => {
-                    if (err) {
-                        console.log(err);
-                    }
-                    if (result2.length > 0) { 
-
-                        res.json({
-                            "msg": "Email is already registered",
-                            "status" : 303
-                        });
-                    }
-                    else {
-                      
-                        // const query = await pool.query("INSERT INTO comedians (uname, f_name, l_name, password, ph_no, email, dob, gender) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *", [uumame, pass_hash, ph_no, email, dob, gender]);
-                        pool.query("INSERT INTO influencers (email, genre, price, role, bio, fans, p_pic) VALUES ( ?, ?, ?, ?, ?, ?, ?)", [email,  genre, price, role, bio, fans, req.file.path],
-                        (err, results) => {
-                            if (err) {
-                                throw err;
-                            }
-                            else {
-                                
-                                res.json({
-                                    "msg": "Data uploaded succesfull",
-                                    "status" : 200
-                                });  // rows[0] mean we dont need all the data in response we just need to read the data that we are inserting in to db just. so we specify row[0]
-                                
-                            } 
-                        });
-                    
-                }
-            });
-
-    } catch (error) {
-        console.error(error.message);        
-    }
-});
-
+})
 
 
 app.listen(port, () => {
     console.log("Server has started on port 5000");
     // dbStart();
 }); 
+
+
+
+
